@@ -6,6 +6,9 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Dominio.Agente;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -27,6 +30,8 @@ public class Estadistica extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Agente a = new Agente();
+					a.conexion();
 					Estadistica frame = new Estadistica();
 					frame.setVisible(true);
 				} catch (Exception e) {
