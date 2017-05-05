@@ -19,32 +19,8 @@ public class Agente {
 	        }
 	}
 	
-	public void Insertar(String p,String a, String d){
-		
-		if (mongo != null) {
-			 
-            //Si no existe la base de datos la crea
-            DB db = mongo.getDB("moviles");
- 
-            //Crea una tabla si no existe y agrega datos
-            DBCollection table = db.getCollection("Movilesdat");
- 
-            //Crea los objectos básicos
-            BasicDBObject da = new BasicDBObject();
-            da.put("Pais",p);
-            da.put("Anyo", a);
-            da.put("Dato", d);
-            
-            table.insert(da);
-            
-            
-		}
-		
-		
-		
-		
-	}
-	
+
+
 	
 	
 }

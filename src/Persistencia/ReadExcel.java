@@ -17,10 +17,8 @@ public class ReadExcel {
 	
 	
 	public void leerArchivoExcel() {
-		Agente a = new Agente();
-		a.conexion();
 		String archivoDestino = "Moviles.xls";
-		//JSONObject obj = new JSONObject();
+		JSONObject obj = new JSONObject();
 		try { 
 			Workbook archivoExcel = Workbook.getWorkbook(new File( 
 					archivoDestino)); 
@@ -38,7 +36,7 @@ public class ReadExcel {
 				String Pais;
 				String anyo;
 				
-				//JSONObject IO = new JSONObject();
+				JSONObject IO = new JSONObject();
 				
 				for (int fila = 1; fila < numFilas; fila++) { // Recorre cada fila de la hoja 
 					for (int columna = 1; columna < numColumnas; columna++) { // Recorre cada  columna de la fila 
@@ -47,9 +45,9 @@ public class ReadExcel {
 						Pais = hoja.getCell(0, fila).getContents();
 						dato = hoja.getCell(columna, fila).getContents();
 						
-						a.Insertar(Pais, anyo, dato);
-						//IO=crearJson(Pais, anyo,dato);
-						//obj.put("id"+fila+""+columna, IO);
+						
+						IO=crearJson(Pais, anyo,dato);
+						obj.put("id"+fila+""+columna, IO);
 						
 					} 
 				} 
@@ -58,7 +56,7 @@ public class ReadExcel {
 			ioe.printStackTrace(); 
 		} 
 		
-		/*try {
+		try {
 
 			FileWriter file = new FileWriter("prueba.json");
 			file.write(obj.toJSONString());
@@ -67,11 +65,11 @@ public class ReadExcel {
 
 		} catch (IOException e) {
 			//manejar error
-		}*/
+		}
 
 	} 
 	
-	/*public JSONObject  crearJson(String p, String a, String d){
+	public JSONObject  crearJson(String p, String a, String d){
 		
 		
 		JSONObject innerObj = new JSONObject();
@@ -82,7 +80,7 @@ public class ReadExcel {
 		
 		return innerObj;
 		
-	}*/
+	}
 
 
 }
