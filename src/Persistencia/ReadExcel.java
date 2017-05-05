@@ -6,7 +6,9 @@ import jxl.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
+import org.bson.Document;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -16,9 +18,11 @@ import Dominio.Agente;
 public class ReadExcel {
 	
 	
-	public void leerArchivoExcel() {
+	public LinkedList<Document> leerArchivoExcel() {
 		String archivoDestino = "Moviles.xls";
-		JSONObject obj = new JSONObject();
+		JSONObject obj;
+		LinkedList<Document> documentos= new LinkedList<Document>();
+		
 		try { 
 			Workbook archivoExcel = Workbook.getWorkbook(new File( 
 					archivoDestino)); 
@@ -37,50 +41,50 @@ public class ReadExcel {
 				String anyo;
 				
 				JSONObject IO = new JSONObject();
+				Document nuevo = new Document();
 				
 				for (int fila = 1; fila < numFilas; fila++) { // Recorre cada fila de la hoja 
 					for (int columna = 1; columna < numColumnas; columna++) { // Recorre cada  columna de la fila 
-						
+						obj = new JSONObject();
+						nuevo = new Document();
 						anyo = hoja.getCell(columna,0).getContents();
 						Pais = hoja.getCell(0, fila).getContents();
 						dato = hoja.getCell(columna, fila).getContents();
 						
 						
 						IO=crearJson(Pais, anyo,dato);
-						obj.put("id"+fila+""+columna, IO);
-						
+						nuevo = crearDocumento(Pais, anyo,dato);
+						//obj.put("id"+fila+""+columna, IO);
+						documentos.add(nuevo);
+						System.out.println(nuevo.toString());
 					} 
 				} 
 			} 
 		} catch (Exception ioe) { 
 			ioe.printStackTrace(); 
-		} 
-		
-		try {
-
-			FileWriter file = new FileWriter("prueba.json");
-			file.write(obj.toJSONString());
-			file.flush();
-			file.close();
-
-		} catch (IOException e) {
-			//manejar error
 		}
-
+		return documentos;
 	} 
 	
 	public JSONObject  crearJson(String p, String a, String d){
-		
 		
 		JSONObject innerObj = new JSONObject();
 		innerObj.put("Pais",p);
 		innerObj.put("Año", a);
 		innerObj.put("Dato",d);
 		
-		
 		return innerObj;
 		
 	}
-
-
+	
+public Document  crearDocumento(String p, String a, String d){
+		
+		Document documento = new Document();
+		documento.put("Pais",p);
+		documento.put("Año", a);
+		documento.put("Dato",d);
+		
+		return documento;
+		
+	}
 }

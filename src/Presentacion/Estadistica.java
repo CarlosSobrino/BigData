@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import Dominio.Agente;
 import Persistencia.ReadExcel;
 
 import javax.swing.JTabbedPane;
@@ -30,9 +31,11 @@ public class Estadistica extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					//Agente a = new Agente();
-					ReadExcel RE = new ReadExcel();
-					RE.leerArchivoExcel();
+					Agente a = new Agente();
+					a.conexion();
+					a.insertar();
+					//ReadExcel RE = new ReadExcel();
+					//RE.leerArchivoExcel();
 					Estadistica frame = new Estadistica();
 					frame.setVisible(true);
 				} catch (Exception e) {
