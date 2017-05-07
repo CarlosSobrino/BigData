@@ -6,9 +6,11 @@ import org.bson.Document;
 import org.json.simple.JSONObject;
 
 import com.mongodb.BasicDBObject;
+import com.mongodb.Block;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
 import com.mongodb.MongoClient;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoDatabase;
 
 import Persistencia.ReadExcel;
@@ -22,7 +24,7 @@ public class Agente {
 	public void conexion(){
 	        try {
 	            mongo = new MongoClient("localhost", 27017);
-	            mongodb = mongo.getDatabase("test");
+	            mongodb = mongo.getDatabase("movil");
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        }
@@ -33,7 +35,7 @@ public class Agente {
 		LinkedList<Document> lista = RE.leerArchivoExcel();
 		
 		while(!lista.isEmpty()){
-			mongodb.getCollection("movil").insertOne(lista.remove());
+			mongodb.getCollection("datamovil").insertOne(lista.remove());
 		}
 		
 	}
@@ -53,5 +55,19 @@ public class Agente {
 	public void setMongodb(MongoDatabase mongodb) {
 		this.mongodb = mongodb;
 	}
+	
+	public void listMoviles(){ 
+        // To return all documents in a collection, call the find method without a criteria document.
+        // Para devolver todos los documentos en una colección, llamamos al método find sin ningún documento <b>criteria</b>
+        FindIterable<Document> iterable = mongodb.getCollection("datamovil").find(new Document("Pais", "Andorra"));
+        // Iterate the results and apply a block to each resulting document.
+        // Iteramos los resultados y aplicacimos un bloque para cada documento.
+        iterable.forEach(new Block<Document>() {
+            @Override
+            public void apply(final Document document) {
+                System.out.println(document);
+            }
+        });   
+    }
 		
 }

@@ -2,6 +2,8 @@ package Presentacion;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,6 +11,7 @@ import javax.swing.border.EmptyBorder;
 
 import Dominio.Agente;
 import Persistencia.ReadExcel;
+import jxl.read.biff.BiffException;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
@@ -34,8 +37,7 @@ public class Estadistica extends JFrame {
 					Agente a = new Agente();
 					a.conexion();
 					a.insertar();
-					//ReadExcel RE = new ReadExcel();
-					//RE.leerArchivoExcel();
+					a.listMoviles();
 					Estadistica frame = new Estadistica();
 					frame.setVisible(true);
 				} catch (Exception e) {
@@ -47,8 +49,10 @@ public class Estadistica extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws IOException 
+	 * @throws BiffException 
 	 */
-	public Estadistica() {
+	public Estadistica() throws BiffException, IOException {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 806, 549);
 		contentPane = new JPanel();
@@ -142,5 +146,37 @@ public class Estadistica extends JFrame {
 		txtNivel.setBounds(146, 218, 146, 26);
 		panelPaisAno.add(txtNivel);
 		txtNivel.setColumns(10);
+		
+		
+		//añadir combo años
+		ReadExcel RE = new ReadExcel();
+		ArrayList<String> anyos=new ArrayList<String>();
+		anyos=RE.anyos();
+		String aux;
+		while(!anyos.isEmpty()){
+			aux=anyos.remove(0);
+			if(aux!=null&&aux!=""){
+				cmbano.addItem(aux);
+			}
+			
+			
+		}
+		
+		//añadir combo paises
+		ArrayList<String> Pais=new ArrayList<String>();
+		Pais=RE.Paises();
+		while(!Pais.isEmpty()){
+			aux=Pais.remove(0);
+			if(aux!=null&&aux!=""){
+				cmbPais2.addItem(aux);
+				cmbPais1.addItem(aux);
+			}
+			
+			
+		}
+		
+		
+		
+		
 	}
 }

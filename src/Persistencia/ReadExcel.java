@@ -3,6 +3,8 @@ package Persistencia;
 import java.io.File;
 
 import jxl.*;
+import jxl.read.biff.BiffException;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -64,7 +66,43 @@ public class ReadExcel {
 			ioe.printStackTrace(); 
 		}
 		return documentos;
-	} 
+	}
+	
+	public ArrayList<String> anyos() throws BiffException, IOException{
+		ArrayList<String> anyos=new ArrayList<String>();
+		String archivoDestino = "Moviles.xls";
+		Workbook archivoExcel = Workbook.getWorkbook(new File( 
+				archivoDestino)); 
+		System.out.println("Número de Hojas\t" + archivoExcel.getNumberOfSheets());                                                                                                                                                       
+			Sheet hoja = archivoExcel.getSheet(0); 
+			int numColumnas = hoja.getColumns();
+			for (int columna = 1; columna < numColumnas; columna++) {
+				
+				anyos.add(hoja.getCell(columna,0).getContents());	
+			}
+			
+		return anyos;
+		
+	}
+	
+	public ArrayList<String> Paises() throws BiffException, IOException{
+		ArrayList<String> anyos=new ArrayList<String>();
+		String archivoDestino = "Moviles.xls";
+		Workbook archivoExcel = Workbook.getWorkbook(new File( 
+				archivoDestino));                                                                                                                                                       
+			Sheet hoja = archivoExcel.getSheet(0); 
+			int numFilas = hoja.getRows();
+			for (int fila = 1; fila < numFilas; fila++) {
+				
+				anyos.add(hoja.getCell(0,fila).getContents());	
+			}
+			
+		return anyos;
+		
+	}
+	
+	
+	
 	
 	public JSONObject  crearJson(String p, String a, String d){
 		
